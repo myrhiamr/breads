@@ -31,11 +31,11 @@ router.get('/:id', async (req, res) => {
     })
 })
 
-router.get('/:index/edit', (req, res) => {
-    const { index } = req.params
+router.get('/:id/edit', async (req, res) => {
+    const { id } = req.params
+    const bread = await Bread.findById(id)
     res.render('edit', {
-        bread: Bread[index],
-        index
+        bread
     })
 })
 
@@ -53,26 +53,26 @@ router.post('/', async (req, res) => {
 })
 
 
-//PUT REQUEST
 
-router.put('/:index', (req, res) => {
-    const { index } = req.params
-    if (!req.body.image) req.body.image = 'https://houseofnasheats.com/wp-content/uploads/2022/02/French-Bread-1.jpg'
+// PUT update bread
+router.put('/:id', async (req, res) => {
+    const { id } = req.params
+    if (!req.body.image) req.body.image = undefined
     if (req.body.hasGluten === 'on') {
         req.body.hasGluten = true
     } else {
         req.body.hasGluten = false
     }
-    Bread[index] = req.body
-    res.redirect(`/bread/${index}`)
+    await Bread.findByIdAndUpdate(id, req.body)
+    res.redirect(`/bread/${id}`)
 })
 
 
 // Delete bread
 
-router.delete('/:index', (req, res) => {
-    const { index } = req.params
-    Bread.splice(index, 1)
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params
+    await Bread.findByIdAndDelete(id)
     res.redirect('/bread')
 })
 
