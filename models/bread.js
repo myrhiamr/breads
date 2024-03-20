@@ -11,8 +11,16 @@ const breadSchema = new mongoose.Schema({
   image: {
     type: String,
     default: 'https://houseofnasheats.com/wp-content/uploads/2022/02/French-Bread-1.jpg'
+  },
+  baker: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Baker'
   }
 })
+
+breadSchema.methods.getBakedBy = function() {
+  return `${this.name} was baked by ${this.baker.name} who has seen here since ${this.baker.startDate.getFullYear()}.`
+}
 
 module.exports = mongoose.model('Bread', breadSchema)
 

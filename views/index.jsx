@@ -1,11 +1,18 @@
 const React = require('react')
 const Default = require('./layout/default')
 
-function Index({ breads }) {
+function Index({ breads, bakers }) {
   const display = breads.map((bread) => {
     return (
       <li>
         <a href={`/bread/${bread.id}`}>{bread.name}</a>
+      </li>
+    )
+  })
+  const bakerDisplay = bakers.map(baker => {
+    return(
+      <li key={baker.id}>
+        <a href={`/baker/${baker.id}`}>{baker.name}</a>
       </li>
     )
   })
@@ -21,6 +28,8 @@ function Index({ breads }) {
         </div>
             {display}
         </ul>
+            <p>Bakers</p>
+            {bakerDisplay}
       </Default>
     )
 }

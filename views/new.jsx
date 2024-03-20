@@ -1,7 +1,12 @@
 const React = require('react')
 const Default = require('./layout/default')
 
-function New() {
+function New({ bakers }) {
+    const bakerSelect = bakers.map(baker => {
+        return (
+            <option key={baker.id} value={baker.id}>{baker.name}</option>
+        )
+    })
     return (
         <Default>
             <h2>Add a new bread</h2>
@@ -20,10 +25,14 @@ function New() {
                 <label htmlFor="hasGluten">Has Gluten?</label>
                 <input
                     type="checkbox"
-                    name="hasGluten"
+                    name="hasGluten" 
                     id="hasGluten"
                     defaultChecked
                 />
+                <label htmlFor="baker">Baker</label>
+                    <select name="baker" id="baker">
+                       {bakerSelect}
+                    </select>
                 <br />
                 <input type="submit" />
             </form>
